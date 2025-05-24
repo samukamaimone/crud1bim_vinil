@@ -1,0 +1,12 @@
+main {
+    min-height: calc(100vh - 3rem - 4rem);
+}
+
+nav {
+    height: 4rem;
+}
+
+footer {
+    justify-content: center;
+    height: 3rem;
+}
