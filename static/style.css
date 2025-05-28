@@ -9,4 +9,28 @@ nav {
 footer {
     justify-content: center; 
     height: 3rem;
+    background-color: #ededed;
 }
+
+/*  form-select estilizado separadamente, 
+    pois o bootstrap não funcionou com essa classe  */
+
+.form-select {
+    border: 1px solid #ced4da;
+    border-radius: 0.5rem;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background-color: #ffffff;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .form-select:focus {
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+    background-color: #fff;
+  }
+  
+  .form-select option:first-child {
+    color: #6c757d;
+  }

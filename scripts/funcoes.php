@@ -15,4 +15,11 @@
         $dataCorrigida = implode('/', array_reverse(explode('-', $date)));
         return $dataCorrigida;
     }
+
+    function converteDataHora($dateTime)
+    {
+        list($data, $hora) = explode(' ', $dateTime);
+        $dataFormatada = implode('/', array_reverse(explode('-', $data)));
+        return $dataFormatada . ' ' . $hora;
+    }
 ?>

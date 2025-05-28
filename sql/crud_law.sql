@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 24/05/2025 às 04:07
+-- Tempo de geração: 25/05/2025 às 13:24
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -33,6 +33,15 @@ CREATE TABLE `genero` (
   `corredor` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `genero`
+--
+
+INSERT INTO `genero` (`id`, `nome_genero`, `corredor`) VALUES
+(1, 'Heavy Metal', 'Corredor 1A'),
+(2, 'Prog Rock', 'Corredor 1B'),
+(4, 'Texas Blues', 'Corredor 2B');
+
 -- --------------------------------------------------------
 
 --
@@ -45,6 +54,15 @@ CREATE TABLE `locacao` (
   `id_cliente` int(11) NOT NULL,
   `data_devolucao` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `locacao`
+--
+
+INSERT INTO `locacao` (`id`, `data_hora`, `id_cliente`, `data_devolucao`) VALUES
+(4, '2025-05-24 16:29:00', 18, '2025-05-31'),
+(5, '2025-05-25 07:54:00', 19, '2025-06-01'),
+(6, '2025-05-25 08:22:00', 18, '2025-06-01');
 
 -- --------------------------------------------------------
 
@@ -59,6 +77,15 @@ CREATE TABLE `vinil` (
   `id_genero` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Despejando dados para a tabela `vinil`
+--
+
+INSERT INTO `vinil` (`id`, `titulo`, `banda`, `id_genero`) VALUES
+(1, 'Black Sabbath', 'Black Sabbath', 1),
+(2, 'The Dark Side of The Moon', 'Pink Floyd', 2),
+(4, 'Couldn\'t Stand The Weather', 'Stevie Ray Voughan', 4);
+
 -- --------------------------------------------------------
 
 --
@@ -66,10 +93,19 @@ CREATE TABLE `vinil` (
 --
 
 CREATE TABLE `vinil_locacao` (
-  `id` int(11) NOT NULL,
   `id_vinil` int(11) NOT NULL,
   `id_locacao` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Despejando dados para a tabela `vinil_locacao`
+--
+
+INSERT INTO `vinil_locacao` (`id_vinil`, `id_locacao`) VALUES
+(4, 5),
+(1, 5),
+(2, 5),
+(1, 4);
 
 --
 -- Índices para tabelas despejadas
@@ -99,9 +135,8 @@ ALTER TABLE `vinil`
 -- Índices de tabela `vinil_locacao`
 --
 ALTER TABLE `vinil_locacao`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id_locacao` (`id_locacao`),
-  ADD KEY `id_vinil` (`id_vinil`);
+  ADD KEY `vinil_locacao_ibfk_2` (`id_vinil`),
+  ADD KEY `vinil_locacao_ibfk_1` (`id_locacao`);
 
 --
 -- AUTO_INCREMENT para tabelas despejadas
@@ -111,25 +146,19 @@ ALTER TABLE `vinil_locacao`
 -- AUTO_INCREMENT de tabela `genero`
 --
 ALTER TABLE `genero`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de tabela `locacao`
 --
 ALTER TABLE `locacao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `vinil`
 --
 ALTER TABLE `vinil`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de tabela `vinil_locacao`
---
-ALTER TABLE `vinil_locacao`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restrições para tabelas despejadas
@@ -151,8 +180,8 @@ ALTER TABLE `vinil`
 -- Restrições para tabelas `vinil_locacao`
 --
 ALTER TABLE `vinil_locacao`
-  ADD CONSTRAINT `vinil_locacao_ibfk_1` FOREIGN KEY (`id_locacao`) REFERENCES `locacao` (`id`),
-  ADD CONSTRAINT `vinil_locacao_ibfk_2` FOREIGN KEY (`id_vinil`) REFERENCES `vinil` (`id`);
+  ADD CONSTRAINT `vinil_locacao_ibfk_1` FOREIGN KEY (`id_locacao`) REFERENCES `locacao` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `vinil_locacao_ibfk_2` FOREIGN KEY (`id_vinil`) REFERENCES `vinil` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
